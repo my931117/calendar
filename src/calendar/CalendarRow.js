@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import moment from 'moment';
+import styled from 'styled-components'
 
 function getDate(props, day) {
   const { year, month } = props;
@@ -10,30 +11,9 @@ function getDate(props, day) {
   } else if (day.type === 'next') {
     return date.add(1, 'month');
   }
+  
+  console.log(date)
   return date;
-}
-
-const IMPORTANT_CLASSNAMES = {
-  高: 'high',
-  中: 'normal',
-  低: 'low',
-};
-
-function getScheduledClassName(props, day) {
-  const scheduledItem = (props.arr || []).find(
-    item =>
-      item.date.format('YYYY-MM-DD') ===
-      getDate(props, day).format('YYYY-MM-DD'),
-  );
-
-  return scheduledItem
-    ? [
-        'sinooa-calendar-schedule-day',
-        `sinooa-calendar-schedule-day__${IMPORTANT_CLASSNAMES[
-          scheduledItem.important
-        ]}`,
-      ]
-    : null;
 }
 
 const isHignDay = (props, day, type) => {
@@ -44,10 +24,11 @@ const isHignDay = (props, day, type) => {
       flag =
         currentDate.getFullYear() === props.year &&
         currentDate.getMonth() === props.month &&
-        currentDate.getDate() === day.day;
+        currentDate.getDate() === day.day &&
+        day.type === 'current';
       break;
     case 2:
-      flag = props.selectedDay === day.day && props.dayType == day.type;
+      flag = props.selectedDay === day.day && props.dayType === day.type;
       break;
     default:
       break;
@@ -68,27 +49,29 @@ function getMonthDays(year, month) {
  * @param {*} props
  */
 export default function CalendarRow(props) {
+  const Tr = styled.tr``;
+  const Td = styled.td`
+    color: ${props => (props.isDay || props.isSelectDay) ? '#fff' : '#333'};
+    background-color: ${props => props.isDay ? '#52d58d' : props.isSelectDay ? '#fad383' : '#fff'};
+  `;
+
   const mDays = getMonthDays(props.year, props.month);
   const tds = props.days.map((day, index) => {
+  
     return (
-      <td
-        className={classNames(
-          {
-            'sinooa-calendar-current-day': isHignDay(props, day, 1),
-            'sinooa-calendar-selected-day': isHignDay(props, day, 2),
-          },
-          getScheduledClassName(props, day),
-        )}
+      <Td
+        isDay = {isHignDay(props, day, 1)}
+        isSelectDay = {isHignDay(props, day, 2)} 
         key={day.day}
         onClick={() => props.onSelected(day.day, day.type)}
       >
         {day.type !== 'current' ? (
-          <span style={{ color: '#dedede' }}>{day.day}</span>
+          <span style={{ color: '#dedede'}}>{day.day}</span>
         ) : (
           <span>{day.day}</span>
         )}
-      </td>
+      </Td>
     );
   });
-  return <tr className="sinooa-calendar-td">{tds}</tr>;
+  return <Tr className="sinooa-calendar-td">{tds}</Tr>;
 }

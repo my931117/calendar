@@ -20,7 +20,7 @@ const Tr = styled.tr`
   height:30px;
 `;
 
-const Th = styled.th`
+const Th = styled.td`
   height:auto;
   border:1px solid #dedede;
   min-width: 30px;
@@ -31,7 +31,7 @@ const Tbody = styled.tbody`
   width:100%;
 `;
 
-export default function CalendarContent(props: CalendarContent) {
+export default function CalendarContent(props) {
   const { days } = props;
   const trNum = Math.ceil(days.length / 7);
   const trs = [];

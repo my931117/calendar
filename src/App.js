@@ -123,7 +123,6 @@ class App extends Component {
         selectedDay,
       });
 
-      this.fetchMyScheduleList(year, month);
     } else if (dayType === 'next') {
       const month = this.state.month === 11 ? 0 : this.state.month + 1;
       const year =
@@ -134,7 +133,6 @@ class App extends Component {
         selectedDay,
       });
 
-      this.fetchMyScheduleList(year, month);
     }
 
     this.setState({
@@ -142,9 +140,7 @@ class App extends Component {
     });
   }
 
-  fetchMyScheduleList() {
-    
-  }
+  
 
   render() {
     return (
