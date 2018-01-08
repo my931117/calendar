@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import CalendarRow from './CalendarRow';
 
 const Title = styled.h1`
   color: red;
@@ -16,47 +17,54 @@ const Thead = styled.thead`
 `;
 
 const Tr = styled.tr`
-  width:100%;
   height:30px;
 `;
 
 const Th = styled.th`
-  width:14.28%;
   height:auto;
   border:1px solid #dedede;
+  min-width: 30px;
+  min-height: 30px;
 `;
 
 const Tbody = styled.tbody`
-
+  width:100%;
 `;
 
-export default class CalendarContent extends React.Component {
-  render(){
-    return (
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>日</Th>
-              <Th>一</Th>
-              <Th>二</Th>
-              <Th>三</Th>
-              <Th>四</Th>
-              <Th>五</Th>
-              <Th>六</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Th></Th>
-              <Th>1</Th>
-              <Th>2</Th>
-              <Th>3</Th>
-              <Th>4</Th>
-              <Th>5</Th>
-              <Th>6</Th>
-            </Tr>
-          </Tbody>
-        </Table>
+export default function CalendarContent(props: CalendarContent) {
+  const { days } = props;
+  const trNum = Math.ceil(days.length / 7);
+  const trs = [];
+  for (let i = 0; i < trNum; i++) {
+    trs.push(
+      <CalendarRow
+        arr={props.arr}
+        key={i}
+        days={days.slice(i * 7, i * 7 + 7)}
+        onSelected={(selectedDay, type) => props.onSelected(selectedDay, type)}
+        year={props.year}
+        month={props.month}
+        selectedDay={props.selectedDay}
+        dayType={props.dayType}
+      />,
     );
   }
+  return (
+    <div>
+      <Table>
+        <Thead>
+          <Tr>
+            <Th>日</Th>
+            <Th>一</Th>
+            <Th>二</Th>
+            <Th>三</Th>
+            <Th>四</Th>
+            <Th>五</Th>
+            <Th>六</Th>
+          </Tr>
+        </Thead>
+        <Tbody>{trs}</Tbody>
+      </Table>
+    </div>
+  );
 }

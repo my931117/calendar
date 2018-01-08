@@ -11,6 +11,8 @@ class App extends Component {
     this.state = {
       year: now.getFullYear(),
       month: now.getMonth(),
+      selectedDay: now.getDate(),
+      dayType: 'current',
     }
   }
 
@@ -40,9 +42,109 @@ class App extends Component {
     })
   }
 
-  
+  getMonthDays(month) {
+    const temp = new Date(this.state.year, month + 1, 0);
+    return temp.getDate();
+  }
 
+  getFirstDayWeek() {
+    const dt = new Date(`${this.state.year}/${this.state.month + 1}/1`);
+    const Weekdays = dt.getDay();
+    return Weekdays;
+  }
 
+  getLastDayWeek(lastDay) {
+    const dt = new Date(
+      `${this.state.year}/${this.state.month + 1}/${lastDay}`,
+    );
+    const Weekdays = dt.getDay();
+    return Weekdays;
+  }
+
+  getDays() {
+    const arr1 = [];
+    const arr2 = [];
+    const arr3 = [];
+    const getDayItems = this.getMonthDays(this.state.month);
+    const firstDayWeek = this.getFirstDayWeek();
+    const preMonthLastDay = this.getMonthDays(this.state.month - 1);
+    const lastDayWeek = this.getLastDayWeek(getDayItems);
+    for (let i = 0; i < getDayItems; i++) {
+      arr2[i] = {
+        type: 'current',
+        day: i + 1,
+      };
+    }
+
+    for (let i = 0; i < firstDayWeek; i++) {
+      arr1[i] = {
+        type: 'prev',
+        day: preMonthLastDay - i,
+      };
+    }
+
+    if (lastDayWeek !== 6) {
+      for (let i = 0; i < 6 - lastDayWeek; i++) {
+        arr3[i] = {
+          type: 'next',
+          day: i + 1,
+        };
+      }
+    }
+
+    const days = arr1
+    .reverse()
+    .concat(arr2)
+    .concat(arr3);
+
+    const beginNextDay = 6 - lastDayWeek;
+    const weeks = days.length / 7;
+    const max = 42;
+    if (weeks < 6) {
+      for (let i = 0; i < max - weeks * 7; i++) {
+        days.push({
+          type: 'next',
+          day: beginNextDay + i + 1,
+        });
+      }
+    }
+
+    return days;
+  }
+
+  handleDaySelected(selectedDay: number, dayType: String) {
+    if (dayType === 'prev') {
+      const month = this.state.month === 0 ? 11 : this.state.month - 1;
+      const year =
+        this.state.month === 0 ? this.state.year - 1 : this.state.year;
+      this.setState({
+        year,
+        month,
+        selectedDay,
+      });
+
+      this.fetchMyScheduleList(year, month);
+    } else if (dayType === 'next') {
+      const month = this.state.month === 11 ? 0 : this.state.month + 1;
+      const year =
+        this.state.month === 11 ? this.state.year + 1 : this.state.year;
+      this.setState({
+        year,
+        month,
+        selectedDay,
+      });
+
+      this.fetchMyScheduleList(year, month);
+    }
+
+    this.setState({
+      selectedDay,
+    });
+  }
+
+  fetchMyScheduleList() {
+    
+  }
 
   render() {
     return (
@@ -53,7 +155,14 @@ class App extends Component {
           prevMonth={() => this.prevMonth()}
           nextMonth={() => this.nextMonth()}
         />
-        <CalendarContent />
+        <CalendarContent
+          days={this.getDays()}
+          month={this.state.month}
+          year={this.state.year}
+          selectedDay={this.state.selectedDay}
+          dayType={this.state.dayType}
+          onSelected={(value, type) => this.handleDaySelected(value, type)}
+        />
       </div>
     );
   }
