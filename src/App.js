@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import CalendarHeader from './calendar/CalendarHeader';
+import CalendarContent from './calendar/CalendarContent';
 
 class App extends Component {
   constructor(){
@@ -52,6 +53,7 @@ class App extends Component {
           prevMonth={() => this.prevMonth()}
           nextMonth={() => this.nextMonth()}
         />
+        <CalendarContent />
       </div>
     );
   }

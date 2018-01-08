@@ -33,8 +33,6 @@ const Tbody = styled.tbody`
 export default class CalendarContent extends React.Component {
   render(){
     return (
-      <div>
-        <Title>日历</Title>
         <Table>
           <Thead>
             <Tr>
@@ -59,7 +57,6 @@ export default class CalendarContent extends React.Component {
             </Tr>
           </Tbody>
         </Table>
-      </div>
     );
   }
 }
