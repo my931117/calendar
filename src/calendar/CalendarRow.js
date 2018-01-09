@@ -56,6 +56,7 @@ export default function CalendarRow(props) {
     height: 34px;
     cursor: pointer;
     position: relative;
+    font-size: 12px;
   `;
   const Shadow = styled.div`
     background-color: ${props => props.isDay ? '#fff': 'rgb(0, 151, 167)'};
@@ -69,7 +70,8 @@ export default function CalendarRow(props) {
     width: 34px;
     opacity: ${props => props.isSelectDay ? '1' : '0'};
     line-height: 35px;
-    color:${props => props.isDay ? 'rgb(0, 188, 212)': '#fff'}
+    color:${props => props.isDay ? 'rgb(0, 188, 212)': '#fff'};
+    font-size: 12px;
   `;
 
   const mDays = getMonthDays(props.year, props.month);

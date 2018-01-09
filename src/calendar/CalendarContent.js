@@ -6,6 +6,7 @@ const Table = styled.table`
   height:auto;
   border-collapse: collapse;
   height: 234px;
+  font-size: 12px;
 `;
 
 const Thead = styled.thead`
