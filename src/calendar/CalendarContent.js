@@ -2,33 +2,42 @@ import React from "react";
 import styled from "styled-components";
 import CalendarRow from './CalendarRow';
 
-const Title = styled.h1`
-  color: red;
-`;
-
 const Table = styled.table`
-  width:100%;
   height:auto;
   border-collapse: collapse;
+  height: 234px;
 `;
 
 const Thead = styled.thead`
-
+  height: 20px;
+  font-weight: 500;
+  line-height: 15px;
+  opacity: 0.5;
+  text-align: center;
 `;
 
 const Tr = styled.tr`
-  height:30px;
+  height:34px;
 `;
 
 const Th = styled.td`
-  height:auto;
   border:1px solid #dedede;
-  min-width: 30px;
-  min-height: 30px;
+  border: 0px;
+  width: 42px;
 `;
 
+const Td = styled.td`
+  border:1px solid #dedede;
+  border: 0px;
+  width: 42px;
+  min-height: 20px;
+`
+
+const Hd = styled.tr`
+  height:20px;
+`
+
 const Tbody = styled.tbody`
-  width:100%;
 `;
 
 export default function CalendarContent(props) {
@@ -53,7 +62,7 @@ export default function CalendarContent(props) {
     <div>
       <Table>
         <Thead>
-          <Tr>
+          <Hd>
             <Th>日</Th>
             <Th>一</Th>
             <Th>二</Th>
@@ -61,7 +70,7 @@ export default function CalendarContent(props) {
             <Th>四</Th>
             <Th>五</Th>
             <Th>六</Th>
-          </Tr>
+          </Hd>
         </Thead>
         <Tbody>{trs}</Tbody>
       </Table>

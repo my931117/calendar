@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarContent from './calendar/CalendarContent';
+import styled from 'styled-components'
 
 class App extends Component {
   constructor(){
@@ -112,7 +113,7 @@ class App extends Component {
     return days;
   }
 
-  handleDaySelected(selectedDay: number, dayType: String) {
+  handleDaySelected(selectedDay, dayType) {
     if (dayType === 'prev') {
       const month = this.state.month === 0 ? 11 : this.state.month - 1;
       const year =
@@ -143,8 +144,19 @@ class App extends Component {
   
 
   render() {
+    const Calendar = styled.div`
+    display: flex;
+    place-content: space-between;
+    flex-direction: column;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0px 8px;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    width: 300px;
+    height: 282px;
+    `
     return (
-      <div className="App">
+      <Calendar>
         <CalendarHeader 
           year={this.state.year}  
           month={this.state.month}
@@ -159,7 +171,7 @@ class App extends Component {
           dayType={this.state.dayType}
           onSelected={(value, type) => this.handleDaySelected(value, type)}
         />
-      </div>
+      </Calendar>
     );
   }
 }
