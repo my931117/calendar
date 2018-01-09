@@ -145,9 +145,7 @@ class App extends Component {
 
   render() {
     const Calendar = styled.div`
-    display: flex;
-    place-content: space-between;
-    flex-direction: column;
+    background:#fff;
     font-size: 12px;
     font-weight: 400;
     padding: 0px 8px;
